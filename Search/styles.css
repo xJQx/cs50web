@@ -1,0 +1,114 @@
+nav {
+    text-align: right;
+    padding: 20px;
+}
+nav > img {
+    float:left
+}
+a {
+    padding: 5px;
+    color:black;
+    text-decoration: none;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size:small;
+}
+a:hover {
+    text-decoration: underline;
+}
+a[href="https://www.gmail.com"] {
+    border-radius: 5px;
+    background-color: rgba(20, 103, 211, 0.849);
+    color: white;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+a[href="https://www.gmail.com"]:hover {
+    background-color: rgba(20, 103, 211, 0.507);
+    text-decoration: none;
+}
+
+h2 {
+    padding: 10px;
+    padding-left: 30px;
+    color: rgb(207, 10, 10);
+    font-size: 18px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    border-collapse: collapse;
+}
+h4 {
+    padding: 10px;
+}
+
+span1 {
+    color:rgb(92, 190, 223);
+    font-size: 20px;
+}
+
+#form {
+    padding: 150px;
+    text-align: center;
+    
+}
+
+form > div {
+    padding: 10px;
+}
+
+#q {
+    border-radius: 25px;
+    border: 2px solid whitesmoke;
+    padding: 5px;
+    padding-left: 20px;
+    text-align:left;
+    height: 40px;
+    width: 400px;
+    outline: none;
+    font-size: 20px;
+}
+
+.button {
+    border-radius: 10px;
+    border: 2px solid whitesmoke;
+    text-align: center;
+    background-color: whitesmoke;
+    color: black;
+    padding: 8px;
+    padding-left: 20px;
+    padding-right: 20px;
+
+}
+
+#advanced {
+    padding: 10px;
+    padding-left: 15px;
+}
+.adv_text {
+    width: 16%;
+    display: inline-block;
+    font-size: 12px;
+}
+.adv_box {
+    width: 50%;
+}
+.adv_both {
+    display: inline-block;
+    width: 66%;
+}
+input[class="adv_box"]:focus {
+    border-color:navy;
+}
+input[value="Advanced Search"] {
+    float: right;
+    background-color: rgba(5, 111, 211, 0.829);
+    color: white;
+    border-radius: 5px;
+    border: 1px solid rgba(5, 111, 211, 0.829);
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 12px;
+}
+input[value="Advanced Search"]:hover {
+    background-color: rgba(5, 111, 211, 0.644);
+}

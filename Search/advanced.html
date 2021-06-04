@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="styles.css">
+
+        <title>Advanced Search</title>
+    </head>
+    <body>
+        <div>
+            <nav>
+                <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="google" height="35px">
+                <a href="index.html">Home</a>
+                <a href="https://www.gmail.com">Sign In</a>
+            </nav>
+            <h2>Advanced Search</h2>
+            <hr>
+        </div>
+        <div id="advanced">
+            <h4>Find pages with...</h4>
+            <form action="https://google.com/search">
+                <div>
+                    <label class="adv_text" for="q" >all these words: </label>
+                    <input type="text" autofocus autocomplete="off" name="q" class="adv_box">
+                </div>
+                <div>
+                    <label for="as_epq" class="adv_text">this exact word or phrase: </label>
+                    <input type="text" autofocus autocomplete="off" name="as_epq" class="adv_box">
+                </div>
+                <div>
+                    <label for="as_oq" class="adv_text">any of these words: </label>
+                    <input type="text" autofocus autocomplete="off" name="as_oq" class="adv_box">
+                </div>
+                <div>
+                    <label for="as_eq" class="adv_text">none of these words: </label>
+                    <input type="text" autofocus autocomplete="off" name="as_eq" class="adv_box">
+                </div>
+                <div class="adv_both">
+                    <input type="submit" value="Advanced Search">
+                </div>
+            </form>
+        </div>
+        
+    </body>
+</html>
