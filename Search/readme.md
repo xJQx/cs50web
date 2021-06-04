@@ -1,0 +1,1 @@
+To access this web properly, click on index.html
