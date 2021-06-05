@@ -1,0 +1,19 @@
+{% extends 'encyclopedia/layout.html' %}
+
+{% block title %}
+    Edit Page
+{% endblock %}
+
+{% block body %}
+    <form action="/editpage/{{title}}", method="post">
+        {% csrf_token %}
+        <label for="title"><b>Title: </b></label>
+            <input type="text" autofocus autocomplete="off" name="title" value="{{title}}" id="title">
+            <br></br>
+        <label for="textarea"><b>Markdown Content: </b></label>
+            <br></br>
+            <textarea id="textarea" name="textarea">{{old_text}}</textarea>
+            <br></br>
+        <input type="submit" value="Save Page">
+    </form>
+{% endblock %}
