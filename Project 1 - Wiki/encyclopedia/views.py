@@ -2,6 +2,7 @@ from django.shortcuts import render
 from markdown2 import markdown
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
+from random import randrange
 
 from . import util
 
@@ -100,3 +101,10 @@ def editpage(request, title):
             "old_text": old_text,
             "title": title
         })
+
+def random(request):
+    titles = util.list_entries()
+    n = randrange(0, len(titles), 1)
+    title = titles[n]
+
+    return HttpResponseRedirect(reverse("title", kwargs={"title":title}))

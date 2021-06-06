@@ -1,1 +1,1 @@
-piano has 88 keys
+grand piano has 88 keys
