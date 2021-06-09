@@ -1,0 +1,38 @@
+{% extends 'auctions/layout.html' %}
+
+{% block title %}
+    Create Listing
+{% endblock%}
+
+{% block body %}
+    {% if message %}
+        <p style="color:red;">
+            {{message}}
+        </p>
+    {% endif %}
+
+    <form action="{% url 'create_listing' %}" method="post">
+        {% csrf_token %}
+        <label for="title">Title: </label>
+            <input type="text" id="title" name="title" autofocus autocomplete="off">
+            <br></br>
+        <label for="description">Description: </label>
+            <textarea id="description" name="description" rows="4" cols="50"></textarea>
+            <br></br>
+        <label for="starting_bid">Starting Bid: </label>
+            <input type="text" id="starting_bid" name="starting_bid"  autocomplete="off">
+            <br></br>
+        <label for="image_link">Image Link: </label>
+            <input type="text" id="image_link" name="image_link" autocomplete="off">
+            <br></br>
+        <label for="category">Category: </label>
+            <select id="category" name="category">
+                <option selected value=""> -- select an option -- </option>
+                {% for category in categories %}
+                    <option value="{{category}}">{{category}}</option>
+                {% endfor %}
+            </select>
+            <br></br>
+        <input type="submit" value="Create Listing">
+    </form>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2> Closed Listings </h2>
+    <div class="container">
+        {% for listing in listing_rows %}
+            <div class="row">
+                <div class="col-6" style="border:solid;">
+                        <p><b>Title: </b>{{listing.listing_row.title}}</p>
+                        <p><b>Seller: </b>{{listing.listing_row.seller_id}}</p>
+                        <p><b>Description: </b>{{listing.listing_row.description}}</p>
+                        <p><b>Starting Bid: $</b>{{listing.listing_row.starting_bid}}</p>
+                        {% if listing.listing_row.category %}
+                            <p><b>Category: </b>{{listing.listing_row.category}}</p>
+                        {% endif %}
+                        {% if listing.listing_row.image_link %}
+                            <img src="{{listing.listing_row.image_link}}" alt="img" width="150px" style="border: 5px solid #555;">
+                        {% endif %}
+                </div>
+                <div class="col-6" style="border:solid;">
+                    <h3>You, {{request.user}}, have won this item!</h3>
+                    <h3>Price Paid: ${{listing.bid}}</h3>
+                </div>
+            </div>
+            <br></br>
+        {% endfor %}   
+    </div>
+    
+{% endblock %}

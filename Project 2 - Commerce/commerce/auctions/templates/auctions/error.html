@@ -1,0 +1,9 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Error</h2>
+
+    {% if message %}
+        <h3>{{message}}</h3>
+    {% endif %}
+{% endblock %}

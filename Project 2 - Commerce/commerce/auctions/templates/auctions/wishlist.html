@@ -1,0 +1,25 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>WishList</h2>
+    
+    <div class="container">
+        <div class="row">
+            {% for row in rows %}
+                <div class="col-4"  style="border:solid;">
+                    <p><b>Title: </b>{{row.title}}</p>
+                    <p><b>Seller: </b>{{row.seller_id}}</p>
+                    <p><b>Description: </b>{{row.description}}</p>
+                    <p><b>Current Price: $</b>{{row.starting_bid}}</p>
+                    {% if row.category %}
+                        <p><b>Category: </b>{{row.category}}</p>
+                    {% endif %}
+                    {% if row.image_link %}
+                        <img src="{{row.image_link}}" alt="img" width="150px" style="border: 5px solid #555;">
+                    {% endif %}
+                    <a href="{% url "listing" row.title row.title_id %}">View Listing</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

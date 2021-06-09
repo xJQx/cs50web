@@ -1,0 +1,110 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2> Listings </h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-6" style="border:solid;">
+                <p><b>Title: </b>{{listing.title}}</p>
+                <p><b>Seller: </b>{{listing.seller_id}}</p>
+                <p><b>Description: </b>{{listing.description}}</p>
+                <p><b>Starting Bid: $</b>{{listing.starting_bid}}</p>
+                {% if listing.category %}
+                    <p><b>Category: </b>{{listing.category}}</p>
+                {% endif %}
+                {% if listing.image_link %}
+                    <img src="{{listing.image_link}}" alt="img" width="150px" style="border: 5px solid #555;">
+                {% endif %}
+
+                {% if not closed %}
+                    {% if user.is_authenticated %}
+                        {% if not wishlist%}
+                            <br></br>
+                            <form action="{% url "wishlist" %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="title" value="{{listing.title}}">
+                                <input type="hidden" name="title_id" value="{{listing.title_id}}">
+                                <input type="submit" value="Add to wishlist!">
+                            </form>
+                        {% else %}
+                            <br></br>
+                            <form action="{% url "wishlist" %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="title" value="{{listing.title}}">
+                                <input type="hidden" name="title_id" value="{{listing.title_id}}">
+                                <input type="submit" value="Remove from wishlist!">
+                            </form>
+                        {% endif %}
+
+                        {% if listing.seller_id == request.user %}
+                            <br></br>
+                            <form action="{% url 'remove_listing' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="title" value="{{listing.title}}">
+                                <input type="hidden" name="title_id" value="{{listing.title_id}}">
+                                <input type="submit" value="Remove Listing!">
+                            </form>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            </div>
+
+            <div class="col-6" style="border:solid;">  
+                {% if not closed %}
+                    <h3>Bids: </h3>
+                    {% if bids %}
+                        {% for bid in bids %}
+                            <li>{{bid.buyer_id}}: {{bid.bid}}</li>
+                        {% endfor %}
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                        <form action="{% url 'bid' %}" method="post">
+                            {% csrf_token %}
+                            <label for="bid">Bid: </label>
+                            <input type="text" name="bid" id="bid" placeholder="$">
+                            <input type="hidden" name="title" value="{{listing.title}}">
+                            <input type="hidden" name="title_id" value="{{listing.title_id}}">
+                            <input type="submit" value="Place Bid">
+                        </form>
+                    {% endif %}
+                {% else %}
+                    {% if closed.winner == request.user %}
+                        <h3>Winner: {{closed.winner}}</h3>
+                        <h3>Price Bought: ${{closed.bid}}</h3>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+        {% if not closed %}
+            <h2>Comments: </h2>
+            <div class="row">
+                {% if comments %}
+                    {% for comment in comments %}
+                        <div class="col-4"  style="border:solid;">
+                            <p><b>{{comment.user_id}}: </b>{{comment.comment}}</p>
+                            {% if comment.user_id == request.user %}
+                                <form action="{% url 'deletecomment' %}", method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="title_id" value="{{listing.title_id}}">
+                                    <input type="hidden" name="comment_id" value="{{comment.id}}">
+                                    <input type="submit" value="Delete Comment">
+                                </form>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <br></br>
+            </div>
+        {% endif %}
+        <br></br>
+        <div class="row">
+            <form action="{% url 'comments' %}", method="post">
+                {% csrf_token %}
+                <label for="comment">Add a comment</label>
+                <textarea id="comment" name="comment" rows="2" cols="20"></textarea>
+                <input type="hidden" name="title_id" value="{{listing.title_id}}">
+                <input type="submit" value="Add">
+            </form>
+        </div>
+    </div>
+{% endblock %}
