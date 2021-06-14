@@ -1,0 +1,74 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    <h2>All Posts:</h2>
+
+    <!-- For new posts -->
+    {% if user.is_authenticated %}
+        <div class= "container border rounded padding-top">
+            <div class="mb-3">
+                <form action="{% url 'index' %}" method="post">
+                    {% csrf_token %}
+                        <label for="content" class="form-label">New Post</label>
+                        <textarea class="form-control" id="content" name="content" rows="3"></textarea>
+                        <br>
+                        <!-- for error messages for newposts -->
+                        {% if message %}
+                            <div class="alert alert-danger" role="alert">
+                                {{message}}
+                            </div>
+                        {% endif %}
+                        <input type="submit" value="Post" class="btn btn-primary mb-3">
+                </form>
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- posts -->
+    {% for post in posts %}
+        <br>
+        <div class= "container border rounded padding-top">
+            <p><strong><a class="nav1" href="{% url 'profile' post.user %}">{{post.user}}</a></strong></p>
+            <p id="p{{post.id}}">{{post.content}}</p>
+            <textarea id ="t{{post.id}}" cols="100%" rows="5" style="display: none;">{{post.content}}</textarea>
+            <p>{{post.time}}</p>
+            
+
+            <!-- Likes button -->
+            {% if user.is_authenticated %}
+                <button id="l{{post.id}}" name="likepost" value="{{post.id}}" type="button" class="btn btn-primary bg-danger">
+                    Like <span class="badge bg-secondary">{{post.likes}}</span>
+                </button>
+                <button id="ul{{post.id}}" name="unlikepost" value="{{post.id}}" type="button" class="btn btn-primary bg-danger" style="display: none;">
+                    Unlike <span class="badge bg-secondary">{{post.likes}}</span>
+                </button>
+                <br></br>
+            {% else %}
+                <p style="color:red;">Likes: {{post.likes}}</p>
+            {% endif %}
+            
+            <!-- edit post -->
+            {% if post.user == request.user %}
+                <button id="b{{post.id}}" name="editpost" value="{{post.id}}" class="btn btn-primary">Edit</button>
+                <button style="display: none;" id="s{{post.id}}" name="savepost" value="{{post.id}}" class="btn btn-primary">Save</button>
+                <br></br>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <!-- navigation between pages -->
+    {% if page_len > 1 %}
+        <br>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination container">
+                {% if page_num != 1 %}
+                    <li class="page-item"><a class="page-link" href="{% url 'page' page_num|add:"-1" %}">Previous</a></li>
+                    <pre class="tab">   </pre>
+                {% endif %}
+                {% if page_num != page_len %}
+                    <li class="page-item"><a class="page-link" href="{% url 'page' page_num|add:"1" %}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    <h2>Following:</h2>
+    
+    <!-- posts -->
+    {% for post in posts %}
+        <br>
+        <div class= "container border rounded padding-top">
+            <p><strong><a class="nav1" href="{% url 'profile' post.user %}">{{post.user}}</a></strong></p>
+            <p>{{post.content}}</p>
+            <p>{{post.time}}</p>
+
+            <!-- Likes button -->
+            <button id="l{{post.id}}" name="likepost" value="{{post.id}}" type="button" class="btn btn-primary bg-danger">
+                Like <span class="badge bg-secondary">{{post.likes}}</span>
+            </button>
+            <button id="ul{{post.id}}" name="unlikepost" value="{{post.id}}" type="button" class="btn btn-primary bg-danger" style="display: none;">
+                Unlike <span class="badge bg-secondary">{{post.likes}}</span>
+            </button>
+            <br></br>
+        </div>
+    {% endfor %}
+
+    <!-- navigation between pages -->
+    {% if page_len > 1 %}
+        <br>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination container">
+                {% if page_num != 1 %}
+                    <li class="page-item"><a class="page-link" href="{% url 'fpage' page_num|add:"-1" %}">Previous</a></li>
+                    <pre class="tab">   </pre>
+                {% endif %}
+                {% if page_num != page_len %}
+                    <li class="page-item"><a class="page-link" href="{% url 'fpage' page_num|add:"1" %}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+{% endblock %}

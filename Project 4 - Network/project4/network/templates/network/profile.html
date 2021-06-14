@@ -1,0 +1,90 @@
+{% extends 'network/layout.html' %}
+
+{% block body %}
+    {% for follow in follows %}
+        <h1 style="text-align:center;">{{follow.user}}</h1>
+        <br>
+        <!-- show following -->
+        <div class= "container">
+            <div class="row">
+                <div class="col-6" style="text-align:right;">
+                    <p><b>Following:</b> {{follow.following}}</p>
+                </div>
+                <div class="col-6">
+                    <p><b>Followers:</b> {{follow.followers}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12" style="text-align:center;">
+                    <!-- allow follow and unfollow feature -->
+                    {% if request.user != follow.user %}
+                        {% for temp in following %}
+                            {% if temp.following %}
+                                <form action="{% url 'follow' %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="idol" value="{{follow.user}}">
+                                    <input type="hidden" name="follow_type" value="unfollow">
+                                    <input type="submit" value="Unfollow" class="btn btn-primary mb-3">
+                                </form>
+                            {% else %}
+                                <form action="{% url 'follow' %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="idol" value="{{follow.user}}">
+                                    <input type="hidden" name="follow_type" value="follow">
+                                    <input type="submit" value="Follow" class="btn btn-primary mb-3">
+                                </form>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    <!-- show posts -->
+    <br>
+    <h2>Posts: </h2>
+    {% for post in posts %}
+        <br>
+        <div class= "container border rounded padding-top">
+            <p><b>{{post.user}}</b></p>
+            <p id="p{{post.id}}">{{post.content}}</p>
+            <textarea id ="t{{post.id}}" cols="100%" rows="5" style="display: none;">{{post.content}}</textarea>
+            <p>{{post.time}}</p>
+
+            <!-- Likes button -->
+            <button id="l{{post.id}}" name="likepost" value="{{post.id}}" type="button" class="btn btn-primary bg-danger">
+                Like <span class="badge bg-secondary">{{post.likes}}</span>
+            </button>
+            <button id="ul{{post.id}}" name="unlikepost" value="{{post.id}}" type="button" class="btn btn-primary bg-danger" style="display: none;">
+                Unlike <span class="badge bg-secondary">{{post.likes}}</span>
+            </button>
+            <br></br>
+
+            <!-- edit post -->
+            {% if post.user == request.user %}
+                <button id="b{{post.id}}" name="editpost" value="{{post.id}}" class="btn btn-primary">Edit</button>
+                <button style="display: none;" id="s{{post.id}}" name="savepost" value="{{post.id}}" class="btn btn-primary">Save</button>
+                <br></br>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <!-- navigation between pages -->
+    {% for follow in follows %}
+        {% if page_len > 1 %}
+            <br>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination container">
+                    {% if page_num != 1 %}
+                        <li class="page-item"><a class="page-link" href="{% url 'ppage' follow.user page_num|add:"-1" %}">Previous</a></li>
+                        <pre class="tab">   </pre>
+                    {% endif %}
+                    {% if page_num != page_len %}
+                        <li class="page-item"><a class="page-link" href="{% url 'ppage' follow.user page_num|add:"1" %}">Next</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% endif %}
+    {% endfor %}
+{% endblock %}
