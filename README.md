@@ -1,4 +1,5 @@
 # CS50's Web Programming with Python and JavaScript
+## https://cs50.harvard.edu/web/2020/
 ### Watch each of the course's nine lectures and submit each of the course's six projects:
 ### Course sequence:
 1. Watch HTML, CSS.
